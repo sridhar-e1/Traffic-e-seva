@@ -1,0 +1,198 @@
+<html>
+<head>
+<title>e-seva-traffic.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+e-seva-traffic.py</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">kivy</span>
+<span class="s1">kivy.require(</span><span class="s2">'1.1.1'</span><span class="s1">)</span>
+<span class="s0">from </span><span class="s1">kivy.app </span><span class="s0">import </span><span class="s1">App</span>
+<span class="s0">from </span><span class="s1">kivy.uix.label </span><span class="s0">import </span><span class="s1">Label</span>
+<span class="s0">from </span><span class="s1">kivy.uix.floatlayout </span><span class="s0">import </span><span class="s1">FloatLayout</span>
+<span class="s0">from </span><span class="s1">kivy.uix.image </span><span class="s0">import </span><span class="s1">Image</span>
+<span class="s0">from </span><span class="s1">kivy.uix.button </span><span class="s0">import </span><span class="s1">Button</span>
+<span class="s0">from </span><span class="s1">kivy.core.window </span><span class="s0">import </span><span class="s1">Window</span>
+<span class="s0">from </span><span class="s1">kivy.uix.textinput </span><span class="s0">import </span><span class="s1">TextInput</span>
+<span class="s0">import </span><span class="s1">mysql.connector</span>
+
+<span class="s1">mydb = mysql.connector.connect(host=</span><span class="s2">&quot;localhost&quot;</span><span class="s0">,</span><span class="s1">user=</span><span class="s2">&quot;root&quot;</span><span class="s0">,</span><span class="s1">password=</span><span class="s2">&quot;1234&quot;</span><span class="s0">,</span><span class="s1">database=</span><span class="s2">'mydatabase'</span><span class="s1">)</span>
+
+<span class="s1">mycursor = mydb.cursor()</span>
+
+<span class="s0">class </span><span class="s1">Login(FloatLayout):</span>
+
+    <span class="s0">def </span><span class="s1">__init__(self</span><span class="s0">, </span><span class="s1">**kwargs):</span>
+        <span class="s1">super(Login</span><span class="s0">, </span><span class="s1">self).__init__(**kwargs)</span>
+
+        <span class="s1">self.picture()</span>
+
+    <span class="s0">def </span><span class="s1">picture(self):</span>
+        <span class="s1">self.add_widget(Image(source=</span><span class="s2">&quot;sriram.jpg&quot;</span><span class="s0">,</span><span class="s1">opacity=</span><span class="s3">0.3</span><span class="s1">))</span>
+
+        <span class="s1">self.add_widget(Label(text=</span><span class="s2">&quot;welcome to my application&quot;</span><span class="s1">))</span>
+        <span class="s1">self.btn=Button(text=</span><span class="s2">'next'</span><span class="s0">, </span><span class="s1">background_color=(</span><span class="s3">0.1</span><span class="s0">, </span><span class="s3">1</span><span class="s0">, </span><span class="s3">1</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">size_hint=(</span><span class="s3">0.1</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">,</span><span class="s1">pos_hint ={</span><span class="s2">'x'</span><span class="s1">:</span><span class="s3">0.45</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">:</span><span class="s3">0.35</span><span class="s1">})</span>
+        <span class="s1">self.add_widget(self.btn)</span>
+        <span class="s1">self.btn.bind(on_press=self.callback)</span>
+
+    <span class="s0">def </span><span class="s1">callback (self</span><span class="s0">,</span><span class="s1">instance):</span>
+
+        <span class="s1">print(</span><span class="s2">&quot;called jolly&quot;</span><span class="s1">)</span>
+        <span class="s1">self.clear_widgets()</span>
+        <span class="s1">Window.clearcolor=(</span><span class="s3">0.5</span><span class="s0">,</span><span class="s3">0.5</span><span class="s0">,</span><span class="s3">1</span><span class="s0">,</span><span class="s3">1</span><span class="s1">)</span>
+        <span class="s1">self.btn1=Button(text=</span><span class="s2">'ADMIN'</span><span class="s0">,</span><span class="s1">background_color=(</span><span class="s3">0.1</span><span class="s0">,</span><span class="s3">1</span><span class="s0">,</span><span class="s3">1</span><span class="s0">,</span><span class="s3">1</span><span class="s1">)</span><span class="s0">,</span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">,</span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">,</span><span class="s1">pos_hint ={</span><span class="s2">'x'</span><span class="s1">:</span><span class="s3">0.25</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">:</span><span class="s3">0.5</span><span class="s1">})</span>
+        <span class="s1">self.btn2=Button(text=</span><span class="s2">'COP'</span><span class="s0">,</span><span class="s1">background_color=(</span><span class="s3">0.1</span><span class="s0">,</span><span class="s3">1</span><span class="s0">,</span><span class="s3">1</span><span class="s0">,</span><span class="s3">1</span><span class="s1">)</span><span class="s0">,</span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">,</span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">,</span><span class="s1">pos_hint ={</span><span class="s2">'x'</span><span class="s1">:</span><span class="s3">0.45</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">:</span><span class="s3">0.5</span><span class="s1">})</span>
+        <span class="s1">self.btn3=Button(text=</span><span class="s2">'PUBLIC'</span><span class="s0">, </span><span class="s1">background_color=(</span><span class="s3">0.1</span><span class="s0">, </span><span class="s3">1</span><span class="s0">, </span><span class="s3">1</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">,</span>
+                               <span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.65</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.5</span><span class="s1">})</span>
+        <span class="s1">self.add_widget(self.btn1)</span>
+        <span class="s1">self.add_widget(self.btn2)</span>
+        <span class="s1">self.add_widget(self.btn3)</span>
+        <span class="s1">self.btn1.bind(on_press=self.admin)</span>
+        <span class="s1">self.btn2.bind(on_press=self.cop)</span>
+        <span class="s1">self.btn3.bind(on_press=self.public)</span>
+
+    <span class="s0">def </span><span class="s1">admin(self</span><span class="s0">, </span><span class="s1">instance):</span>
+        <span class="s1">print(</span><span class="s2">&quot;admin pressed&quot;</span><span class="s1">)</span>
+        <span class="s1">self.clear_widgets()</span>
+        <span class="s1">self.add_widget(Label(text=</span><span class="s2">&quot;Admin Login&quot;</span><span class="s0">,</span><span class="s1">pos_hint ={</span><span class="s2">'x'</span><span class="s1">:</span><span class="s3">0</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">:</span><span class="s3">0.4</span><span class="s1">}</span><span class="s0">,</span><span class="s1">color=(</span><span class="s3">0</span><span class="s0">,</span><span class="s3">0</span><span class="s0">,</span><span class="s3">0</span><span class="s0">,</span><span class="s3">1</span><span class="s1">)</span><span class="s0">,</span><span class="s1">font_size=</span><span class="s2">&quot;20sp&quot;</span><span class="s0">,</span><span class="s1">bold=</span><span class="s0">True</span><span class="s1">))</span>
+        <span class="s1">self.btn4 = Button(text=</span><span class="s2">'COP'</span><span class="s0">, </span><span class="s1">background_color=(</span><span class="s3">0.4</span><span class="s0">, </span><span class="s3">1</span><span class="s0">, </span><span class="s3">1</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">,</span>
+                           <span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.4</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.75</span><span class="s1">})</span>
+        <span class="s1">self.add_widget(self.btn4)</span>
+        <span class="s1">self.add_widget(</span>
+            <span class="s1">Label(text=</span><span class="s2">&quot;Admin Registration&quot;</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: -</span><span class="s3">0.0025</span><span class="s1">}</span><span class="s0">, </span><span class="s1">color=(</span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">font_size=</span><span class="s2">&quot;20sp&quot;</span><span class="s0">, </span><span class="s1">bold=</span><span class="s0">True</span><span class="s1">))</span>
+        <span class="s1">self.btn5 = Button(text=</span><span class="s2">'admin'</span><span class="s0">, </span><span class="s1">background_color=(</span><span class="s3">0.6</span><span class="s0">, </span><span class="s3">0.01</span><span class="s0">, </span><span class="s3">0.8</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">,</span>
+                           <span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.4</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.3</span><span class="s1">})</span>
+        <span class="s1">self.add_widget(self.btn5)</span>
+        <span class="s1">self.btn4.bind(on_press=self.login)</span>
+        <span class="s1">self.btn5.bind(on_press=self.admin_registration)</span>
+    <span class="s0">def </span><span class="s1">cop(self</span><span class="s0">, </span><span class="s1">instance):</span>
+        <span class="s1">print(</span><span class="s2">&quot;cop pressed&quot;</span><span class="s1">)</span>
+        <span class="s1">self.clear_widgets()</span>
+        <span class="s1">self.add_widget(</span>
+            <span class="s1">Label(text=</span><span class="s2">&quot;cop Login&quot;</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.4</span><span class="s1">}</span><span class="s0">, </span><span class="s1">color=(</span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">font_size=</span><span class="s2">&quot;20sp&quot;</span><span class="s0">, </span><span class="s1">bold=</span><span class="s0">True</span><span class="s1">))</span>
+        <span class="s1">self.btn6 = Button(text=</span><span class="s2">'COP'</span><span class="s0">, </span><span class="s1">background_color=(</span><span class="s3">0.4</span><span class="s0">, </span><span class="s3">1</span><span class="s0">, </span><span class="s3">1</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">,</span>
+                           <span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.4</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.75</span><span class="s1">})</span>
+        <span class="s1">self.add_widget(self.btn6)</span>
+        <span class="s1">self.add_widget(</span>
+            <span class="s1">Label(text=</span><span class="s2">&quot;cop Registration&quot;</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: -</span><span class="s3">0.0025</span><span class="s1">}</span><span class="s0">, </span><span class="s1">color=(</span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">font_size=</span><span class="s2">&quot;20sp&quot;</span><span class="s0">,</span>
+                  <span class="s1">bold=</span><span class="s0">True</span><span class="s1">))</span>
+        <span class="s1">self.btn7 = Button(text=</span><span class="s2">'COP'</span><span class="s0">, </span><span class="s1">background_color=(</span><span class="s3">0.6</span><span class="s0">, </span><span class="s3">0.01</span><span class="s0">, </span><span class="s3">0.8</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">,</span>
+                           <span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.4</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.3</span><span class="s1">})</span>
+        <span class="s1">self.add_widget(self.btn7)</span>
+        <span class="s1">self.btn6.bind(on_press=self.login)</span>
+        <span class="s1">self.btn7.bind(on_press=self.cop_registration)</span>
+
+    <span class="s0">def </span><span class="s1">public (self</span><span class="s0">, </span><span class="s1">instance):</span>
+        <span class="s1">print(</span><span class="s2">&quot;cop pressed&quot;</span><span class="s1">)</span>
+        <span class="s1">self.clear_widgets()</span>
+        <span class="s1">self.add_widget(</span>
+            <span class="s1">Label(text=</span><span class="s2">&quot;public Login&quot;</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.4</span><span class="s1">}</span><span class="s0">, </span><span class="s1">color=(</span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">font_size=</span><span class="s2">&quot;20sp&quot;</span><span class="s0">, </span><span class="s1">bold=</span><span class="s0">True</span><span class="s1">))</span>
+        <span class="s1">self.btn8 = Button(text=</span><span class="s2">'Public'</span><span class="s0">, </span><span class="s1">background_color=(</span><span class="s3">0.4</span><span class="s0">, </span><span class="s3">1</span><span class="s0">, </span><span class="s3">1</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">,</span>
+                           <span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.4</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.75</span><span class="s1">})</span>
+        <span class="s1">self.add_widget(self.btn8)</span>
+        <span class="s1">self.add_widget(</span>
+            <span class="s1">Label(text=</span><span class="s2">&quot;Public Registration&quot;</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: -</span><span class="s3">0.0025</span><span class="s1">}</span><span class="s0">, </span><span class="s1">color=(</span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">font_size=</span><span class="s2">&quot;20sp&quot;</span><span class="s0">,</span>
+                  <span class="s1">bold=</span><span class="s0">True</span><span class="s1">))</span>
+        <span class="s1">self.btn9 = Button(text=</span><span class="s2">'Public'</span><span class="s0">, </span><span class="s1">background_color=(</span><span class="s3">0.6</span><span class="s0">, </span><span class="s3">0.01</span><span class="s0">, </span><span class="s3">0.8</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">,</span>
+                           <span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.4</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.3</span><span class="s1">})</span>
+        <span class="s1">self.add_widget(self.btn9)</span>
+        <span class="s1">self.btn6.bind(on_press=self.login)</span>
+
+    <span class="s0">def </span><span class="s1">login(self</span><span class="s0">, </span><span class="s1">instance):</span>
+        <span class="s1">self.clear_widgets()</span>
+        <span class="s1">self.add_widget(</span>
+            <span class="s1">Label(text=</span><span class="s2">&quot;USERNAME :&quot;</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: -</span><span class="s3">0.1</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.1</span><span class="s1">}</span><span class="s0">, </span><span class="s1">color=(</span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">font_size=</span><span class="s2">&quot;20sp&quot;</span><span class="s0">, </span><span class="s1">bold=</span><span class="s0">True</span><span class="s1">))</span>
+        <span class="s1">self.layout=FloatLayout(size=(</span><span class="s3">300</span><span class="s0">,</span><span class="s3">300</span><span class="s1">))</span>
+
+        <span class="s1">self.username = TextInput(multiline=</span><span class="s0">False,</span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.5</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">:</span><span class="s3">0.55</span><span class="s1">})</span>
+
+        <span class="s1">self.add_widget(self.username)</span>
+        <span class="s1">self.add_widget(</span>
+            <span class="s1">Label(text=</span><span class="s2">&quot;PASSWORD :&quot;</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: -</span><span class="s3">0.1</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: -</span><span class="s3">0.15</span><span class="s1">}</span><span class="s0">, </span><span class="s1">color=(</span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">font_size=</span><span class="s2">&quot;20sp&quot;</span><span class="s0">, </span><span class="s1">bold=</span><span class="s0">True</span><span class="s1">))</span>
+        <span class="s1">self.password = TextInput(multiline=</span><span class="s0">False, </span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.5</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.3</span><span class="s1">}</span><span class="s0">,</span><span class="s1">password=</span><span class="s0">True</span><span class="s1">)</span>
+        <span class="s1">self.add_widget(self.password)</span>
+        <span class="s1">self.btn10 = Button(text=</span><span class="s2">'SUBMIT'</span><span class="s0">, </span><span class="s1">background_color=(</span><span class="s3">0.6</span><span class="s0">, </span><span class="s3">0.01</span><span class="s0">, </span><span class="s3">0.8</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">,</span>
+                           <span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.5</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.2</span><span class="s1">}</span><span class="s0">,</span><span class="s1">on_press=self.submit)</span>
+        <span class="s1">self.add_widget(self.btn10)</span>
+    <span class="s0">def </span><span class="s1">admin_registration(self</span><span class="s0">, </span><span class="s1">instance):</span>
+        <span class="s1">self.clear_widgets()</span>
+
+        <span class="s1">position = </span><span class="s2">'ADMIN'</span>
+
+        <span class="s1">self.add_widget(Label(text=</span><span class="s2">&quot;ADMIN REGISTRATION&quot;</span><span class="s0">,</span><span class="s1">font_size=</span><span class="s2">&quot;30sp&quot;</span><span class="s0">, </span><span class="s1">bold=</span><span class="s0">True,</span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.05</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">:</span><span class="s3">0.4</span><span class="s1">}))</span>
+        <span class="s1">self.add_widget(Label(text=</span><span class="s2">&quot;NAME&quot;</span><span class="s0">, </span><span class="s1">font_size=</span><span class="s2">&quot;20sp&quot;</span><span class="s0">, </span><span class="s1">bold=</span><span class="s0">True, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.25</span><span class="s1">}))</span>
+        <span class="s1">self.tx1 = TextInput(multiline=</span><span class="s0">False, </span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.55</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.7</span><span class="s1">})</span>
+        <span class="s1">self.add_widget(Label(text=</span><span class="s2">&quot;AGE&quot;</span><span class="s0">, </span><span class="s1">font_size=</span><span class="s2">&quot;20sp&quot;</span><span class="s0">, </span><span class="s1">bold=</span><span class="s0">True, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.12</span><span class="s1">}))</span>
+        <span class="s1">self.tx2 = TextInput(multiline=</span><span class="s0">False, </span><span class="s1">size_hint=(</span><span class="s3">0.1</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.6</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.55</span><span class="s1">})</span>
+        <span class="s1">self.add_widget(Label(text=</span><span class="s2">&quot;PHONE_NO&quot;</span><span class="s0">, </span><span class="s1">font_size=</span><span class="s2">&quot;20sp&quot;</span><span class="s0">, </span><span class="s1">bold=</span><span class="s0">True, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.02</span><span class="s1">}))</span>
+        <span class="s1">self.tx3 = TextInput(multiline=</span><span class="s0">False, </span><span class="s1">size_hint=(</span><span class="s3">0.1</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.6</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.45</span><span class="s1">})</span>
+        <span class="s1">self.add_widget(Label(text=</span><span class="s2">&quot;ADDRESS&quot;</span><span class="s0">, </span><span class="s1">font_size=</span><span class="s2">&quot;20sp&quot;</span><span class="s0">, </span><span class="s1">bold=</span><span class="s0">True, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: -</span><span class="s3">0.1</span><span class="s1">}))</span>
+        <span class="s1">self.tx4 = TextInput( size_hint=(</span><span class="s3">0.1</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.6</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.35</span><span class="s1">})</span>
+        <span class="s1">self.add_widget(Label(text=</span><span class="s2">&quot;GENDER&quot;</span><span class="s0">, </span><span class="s1">font_size=</span><span class="s2">&quot;20sp&quot;</span><span class="s0">, </span><span class="s1">bold=</span><span class="s0">True, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: -</span><span class="s3">0.2</span><span class="s1">}))</span>
+        <span class="s1">self.tx5 = TextInput(multiline=</span><span class="s0">False, </span><span class="s1">size_hint=(</span><span class="s3">0.1</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.6</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.25</span><span class="s1">})</span>
+
+        <span class="s1">self.add_widget(self.tx1)</span>
+        <span class="s1">self.add_widget(self.tx2)</span>
+        <span class="s1">self.add_widget(self.tx3)</span>
+        <span class="s1">self.add_widget(self.tx4)</span>
+        <span class="s1">self.add_widget(self.tx5)</span>
+
+
+
+
+    <span class="s0">def </span><span class="s1">cop_registration(self</span><span class="s0">, </span><span class="s1">instance):</span>
+        <span class="s1">position = </span><span class="s2">'COP'</span>
+    <span class="s0">def </span><span class="s1">submit (self</span><span class="s0">,</span><span class="s1">obj):</span>
+        <span class="s1">self.clear_widgets()</span>
+        <span class="s1">self.usr=self.username.text</span>
+        <span class="s1">self.psw=self.password.text</span>
+        <span class="s1">print(self.usr</span><span class="s0">,</span><span class="s1">self.psw)</span>
+        <span class="s1">sql1 = </span><span class="s2">&quot;SELECT * FROM users WHERE ID=%s AND PHONENO=%s&quot;</span>
+        <span class="s1">adr1=(self.username.text</span><span class="s0">,</span><span class="s1">self.password.text</span><span class="s0">,</span><span class="s1">)</span>
+        <span class="s1">mycursor.execute(sql1</span><span class="s0">,</span><span class="s1">adr1)</span>
+        <span class="s1">myresult = mycursor.fetchall()</span>
+
+        <span class="s1">print(len(myresult))</span>
+        <span class="s0">if </span><span class="s1">(len(myresult)&gt;</span><span class="s3">0</span><span class="s1">):</span>
+            <span class="s0">for </span><span class="s1">x </span><span class="s0">in </span><span class="s1">myresult:</span>
+                <span class="s1">print(x[</span><span class="s3">6</span><span class="s1">])</span>
+                <span class="s1">self.add_widget(Label(text=</span><span class="s2">&quot;FINE AMOUNT &quot;</span><span class="s1">+str(x[</span><span class="s3">6</span><span class="s1">])</span><span class="s0">, </span><span class="s1">font_size=</span><span class="s2">&quot;50sp&quot;</span><span class="s0">, </span><span class="s1">bold=</span><span class="s0">True,</span><span class="s1">))</span>
+                <span class="s1">self.add_widget(Button(text=</span><span class="s2">'PAY'</span><span class="s0">,</span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">,</span><span class="s3">0.2</span><span class="s1">)</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.4</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.2</span><span class="s1">}</span><span class="s0">,</span><span class="s1">background_color=(</span><span class="s3">1</span><span class="s0">, </span><span class="s3">0.01</span><span class="s0">, </span><span class="s3">0.8</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)))</span>
+
+        <span class="s0">else</span><span class="s1">:</span>
+           <span class="s1">self.login1()</span>
+    <span class="s0">def </span><span class="s1">login1(self):</span>
+        <span class="s1">self.clear_widgets()</span>
+        <span class="s1">self.add_widget(</span>
+            <span class="s1">Label(text=</span><span class="s2">&quot;USERNAME :&quot;</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: -</span><span class="s3">0.1</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.1</span><span class="s1">}</span><span class="s0">, </span><span class="s1">color=(</span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">font_size=</span><span class="s2">&quot;20sp&quot;</span><span class="s0">, </span><span class="s1">bold=</span><span class="s0">True</span><span class="s1">))</span>
+        <span class="s1">self.layout=FloatLayout(size=(</span><span class="s3">300</span><span class="s0">,</span><span class="s3">300</span><span class="s1">))</span>
+
+        <span class="s1">self.username = TextInput(multiline=</span><span class="s0">False,</span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.5</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">:</span><span class="s3">0.55</span><span class="s1">})</span>
+
+        <span class="s1">self.add_widget(self.username)</span>
+        <span class="s1">self.add_widget(</span>
+            <span class="s1">Label(text=</span><span class="s2">&quot;PASSWORD :&quot;</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: -</span><span class="s3">0.1</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: -</span><span class="s3">0.15</span><span class="s1">}</span><span class="s0">, </span><span class="s1">color=(</span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">0</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">font_size=</span><span class="s2">&quot;20sp&quot;</span><span class="s0">, </span><span class="s1">bold=</span><span class="s0">True</span><span class="s1">))</span>
+        <span class="s1">self.password = TextInput(multiline=</span><span class="s0">False, </span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.5</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.3</span><span class="s1">}</span><span class="s0">,</span><span class="s1">password=</span><span class="s0">True</span><span class="s1">)</span>
+        <span class="s1">self.add_widget(self.password)</span>
+        <span class="s1">self.btn10 = Button(text=</span><span class="s2">'SUBMIT'</span><span class="s0">, </span><span class="s1">background_color=(</span><span class="s3">0.6</span><span class="s0">, </span><span class="s3">0.01</span><span class="s0">, </span><span class="s3">0.8</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span><span class="s0">, </span><span class="s1">size_hint=(</span><span class="s3">0.2</span><span class="s0">, </span><span class="s3">0.1</span><span class="s1">)</span><span class="s0">,</span>
+                           <span class="s1">pos_hint={</span><span class="s2">'x'</span><span class="s1">: </span><span class="s3">0.5</span><span class="s0">, </span><span class="s2">'y'</span><span class="s1">: </span><span class="s3">0.2</span><span class="s1">}</span><span class="s0">,</span><span class="s1">on_press=self.submit)</span>
+        <span class="s1">self.add_widget(self.btn10)</span>
+
+<span class="s0">class </span><span class="s1">Traffic_e_seva(App):</span>
+    <span class="s0">def </span><span class="s1">build(self):</span>
+        <span class="s0">return </span><span class="s1">Login()</span>
+
+<span class="s0">if </span><span class="s1">__name__==</span><span class="s2">'__main__'</span><span class="s1">:</span>
+    <span class="s1">Traffic_e_seva().run()</span></pre>
+</body>
+</html>
